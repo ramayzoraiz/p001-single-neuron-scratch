@@ -139,7 +139,25 @@ def predict(w, b, X):
     return Y_prediction
 
 
-def plot_decision_boundary(w, b, X, y):
+def plot_scatter(X,Y):
+    '''
+    Show the scatter plot of flower dataset
+    
+    Parameters
+    ----------
+    X : numpy.ndarray [shape: (#features, #samples)]
+        matrix of data
+    Y : numpy.ndarray [shape: (1, #samples)]
+        array containing true labels 0 or 1 
+    '''
+    scatter=plt.scatter(X[0, :], X[1, :], c=Y, s=40, cmap=plt.cm.Spectral)
+    plt.legend(*scatter.legend_elements(), loc="upper right", title="Classes")
+    plt.xlabel('feature 1')
+    plt.ylabel('feature 2')
+    plt.show()
+
+
+def plot_decision_boundary(w, b, X, Y):
     """
     Plot the decision boundary for logistic regression
     
@@ -151,7 +169,7 @@ def plot_decision_boundary(w, b, X, y):
         bias used by neuron
     X : numpy.ndarray [shape: (#features, #samples)]
         matrix of data
-    y : numpy.ndarray [shape: (1, #samples)]
+    Y : numpy.ndarray [shape: (1, #samples)]
         array containing true labels 0 or 1 
     """
     # Set min and max values and give it some padding
@@ -165,9 +183,6 @@ def plot_decision_boundary(w, b, X, y):
     Z = Z.reshape(xx.shape)
     # Plot the contour and training examples
     plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)
-    plt.ylabel('feature 2')
-    plt.xlabel('feature 1')
-    plt.scatter(X[0, :], X[1, :], c=y, cmap=plt.cm.Spectral)
-    plt.show()
+    plot_scatter(X,Y)
 
 
