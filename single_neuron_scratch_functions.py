@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import math
 
 def load_flower_dataset(num_samples=500, petals=4, petal_length=4, noise=0.2, angle=30):
     '''
@@ -51,7 +50,7 @@ def load_flower_dataset(num_samples=500, petals=4, petal_length=4, noise=0.2, an
     return X, Y
 
 
-def epoch(X, Y, w, b, learning_rate=0.05):
+def epoch(X, Y, w, b, learning_rate=0.005):
     '''
     Perform one epoch(cycle) of training for NEURON[logistic regression]
     
@@ -81,14 +80,15 @@ def epoch(X, Y, w, b, learning_rate=0.05):
     cost=0
     for i in range(m):
         # FORWARD PROPAGATION
-        z = np.dot(w.T,X[:,i])+b
-        A = 1/(1+math.exp(-z))
+        z = np.dot(w.T,X[:,i])+b # shape(1,)
+        z = z.squeeze()  # shape(1,) to shape()/scalar i.e. [0.0] to 0.0
+        A = 1/(1+np.exp(-z))
 
         # BACKWARD PROPAGATION (ADDING COST FUNCTION)
         cost = cost + (-( Y[0,i]*np.log(A)+(1-Y[0,i])*np.log(1-A)))
         # BACKWARD PROPAGATION (ADDING GRADS)
         dz = A-Y[0,i]
-        dw = dw + np.dot(X[:,i].reshape(-1,1),dz)
+        dw = dw + X[:,i].reshape(-1,1)*dz  # slicing make X[:,1] shape as (2,), need to convert as (2,1) so can add dw
         db = db + dz
 
     # BACKWARD PROPAGATION (FINDING MEAN)
