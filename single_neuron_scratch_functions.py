@@ -80,15 +80,16 @@ def epoch(X, Y, w, b, learning_rate=0.005):
     cost=0
     for i in range(m):
         # FORWARD PROPAGATION
-        z = np.dot(w.T,X[:,i])+b # shape(1,)
-        z = z.squeeze()  # shape(1,) to shape()/scalar i.e. [0.0] to 0.0
+        z = np.dot(w.reshape(-1,),X[:,i])+b  # scalar/shape() --> (d,).(d,)
+        # z = np.matmul(w.T,X[:,i])+b # shape(1,) --> (1,d)X(d,)
+        # z = z.squeeze()  # shape(1,) to shape()/scalar i.e. [0.0] to 0.0
         A = 1/(1+np.exp(-z))
 
         # BACKWARD PROPAGATION (ADDING COST FUNCTION)
         cost = cost + (-( Y[0,i]*np.log(A)+(1-Y[0,i])*np.log(1-A)))
         # BACKWARD PROPAGATION (ADDING GRADS)
         dz = A-Y[0,i]
-        dw = dw + X[:,i].reshape(-1,1)*dz  # slicing make X[:,1] shape as (2,), need to convert as (2,1) so can add dw
+        dw = dw + X[:,i].reshape(-1,1)*dz  # slicing make X[:,i] shape as (2,), need to convert as (2,1) so can add dw
         db = db + dz
 
     # BACKWARD PROPAGATION (FINDING MEAN)
