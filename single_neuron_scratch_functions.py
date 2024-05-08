@@ -131,11 +131,12 @@ def predict(w, b, X):
     A = 1/(1+np.exp(-z))
     
     # Convert probabilities A[0,i] to actual predictions p[0,i]
-    for i in range(A.shape[1]):
-        if A[0, i] > 0.5 :
-            Y_prediction[0,i] = 1
-        else:
-            Y_prediction[0,i] = 0
+    # for i in range(A.shape[1]):
+    #     if A[0, i] > 0.5 :
+    #         Y_prediction[0,i] = 1
+    #     else:
+    #         Y_prediction[0,i] = 0
+    Y_prediction=(A >0.5).astype(int)
     
     return Y_prediction
 
