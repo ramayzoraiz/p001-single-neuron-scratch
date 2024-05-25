@@ -11,4 +11,3 @@
  ![neuron_understanding.ipynb, neuron_and_linear_separable_data.ipynb input and output visualize](img/lin_com.png)
  <br>
  ![neuron_and_linear_separable_data.ipynb input and output visualize](img/nlin_com.png)
-s
